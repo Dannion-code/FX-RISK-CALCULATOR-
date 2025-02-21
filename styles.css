@@ -14,6 +14,9 @@ body {
   min-height: 100vh;
   position: relative; /* For draggable toggle button */
   transition: background 0.3s, color 0.3s;
+  /* Add some top & bottom padding */
+  padding-top: 40px;  /* moves header down */
+  padding-bottom: 80px; /* extra space so toggle not too low */
 }
 
 /* Tabs Container */
@@ -110,7 +113,7 @@ input, select {
 /* Light/Dark Mode Toggle (draggable) at Bottom Center */
 #toggleTheme {
   position: absolute;
-  bottom: 20px;
+  bottom: 70px;
   left: 50%;
   transform: translateX(-50%);
   padding: 8px 16px;
