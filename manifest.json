@@ -1,8 +1,9 @@
 {
   "name": "Dannion FX Risk Calculator",
-  "short_name": "FX Calc",
+  "short_name": "FX Cal",
   "description": "A Forex Risk Calculator for Lot Size, Pips & Points, and Profit & Loss",
-  "start_url": "index.html",
+  "start_url": "./index.html", 
+  "scope": "./",
   "display": "standalone",
   "background_color": "#222222",
   "theme_color": "#222222",
