@@ -1,6 +1,9 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    <!-- Make sure you have these lines in <head> -->
+<link rel="manifest" href="manifest.json" />
+<meta name="apple-mobile-web-app-capable" content="yes"> <!-- iOS full-screen support -->
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Dannion FX Risk Calculator</title>
@@ -47,13 +50,13 @@
   <!-- Main Script (Tab Switching, Drag Logic, Dark Mode, etc.) -->
   <script src="script.js"></script>
 
-  <!-- Register Service Worker for PWA support -->
-  <script>
-    if ('serviceWorker' in navigator) {
-      navigator.serviceWorker.register('service-worker.js')
-        .then(() => console.log('Service Worker Registered'))
-        .catch(err => console.error('SW Registration Failed:', err));
-    }
-  </script>
+<!-- Register Service Worker for PWA -->
+<script>
+  if ('serviceWorker' in navigator) {
+    navigator.serviceWorker.register('service-worker.js')
+      .then(() => console.log('Service Worker Registered'))
+      .catch(err => console.error('SW Registration Failed:', err));
+  }
+</script>
 </body>
 </html>
