@@ -44,6 +44,38 @@ document.addEventListener("DOMContentLoaded", () => {
   });
 });
 
+let deferredPrompt;
+const installBtn = document.getElementById("installButton");
+
+window.addEventListener("beforeinstallprompt", (e) => {
+  // Stop Chrome from automatically showing the prompt
+  e.preventDefault();
+  // Store the event for later
+  deferredPrompt = e;
+  // Show your custom install button
+  installBtn.style.display = "inline-block";
+});
+
+installBtn.addEventListener("click", async () => {
+  // Hide the install button to prevent multiple clicks
+  installBtn.style.display = "none";
+
+  if (deferredPrompt) {
+    // Show the install prompt
+    deferredPrompt.prompt();
+
+    // Wait for the user to respond
+    const { outcome } = await deferredPrompt.userChoice;
+    if (outcome === "accepted") {
+      console.log("User accepted the install prompt");
+    } else {
+      console.log("User dismissed the install prompt");
+    }
+    // Reset the deferred prompt
+    deferredPrompt = null;
+  }
+});
+
 /***********************************************
  *  Copy-to-Clipboard Helper (updated version)
  ***********************************************/
