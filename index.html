@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Dannion FX Risk Calculator</title>
+
+  <!-- Styles & Manifest -->
+  <link rel="stylesheet" href="styles.css" />
+  <link rel="manifest" href="manifest.json" />
+</head>
+<body>
+  <!-- Page Title -->
+  <h1>Dannion FX Risk Calculator</h1>
+
+  <!-- Tabs -->
+  <div class="tabs">
+    <button class="tab-button active" data-tab="lot-size">Lot Size <br> Calculator</button>
+    <button class="tab-button" data-tab="pips-points">Pips & Point <br> Calculator</button>
+    <button class="tab-button" data-tab="profit-loss">Profit & Loss <br> Calculator</button>
+  </div>
+
+  <!-- Main Content (Tab Sections) -->
+  <main>
+    <!-- Lot Size Tab -->
+    <section id="lot-size" class="card-content active">
+      <!-- The JS file will inject the form elements here -->
+      <script src="lot-size.js"></script>
+    </section>
+
+    <!-- Pips & Points Tab -->
+    <section id="pips-points" class="card-content">
+      <!-- The JS file will inject the form elements here -->
+      <script src="pips-points.js"></script>
+    </section>
+
+    <!-- Profit & Loss Tab -->
+    <section id="profit-loss" class="card-content">
+      <!-- The JS file will inject the form elements here -->
+      <script src="profit-loss.js"></script>
+    </section>
+  </main>
+
+  <!-- Draggable Light/Dark Mode Toggle at Bottom Center -->
+  <button id="toggleTheme">Toggle Theme</button>
+
+  <!-- Main Script (Tab Switching, Drag Logic, Dark Mode, etc.) -->
+  <script src="script.js"></script>
+
+  <!-- Register Service Worker for PWA support -->
+  <script>
+    if ('serviceWorker' in navigator) {
+      navigator.serviceWorker.register('service-worker.js')
+        .then(() => console.log('Service Worker Registered'))
+        .catch(err => console.error('SW Registration Failed:', err));
+    }
+  </script>
+</body>
+</html>

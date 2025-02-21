@@ -1,0 +1,165 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600&display=swap');
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Montserrat', sans-serif;
+  background: #f0f0f0;
+  color: #333;
+  text-align: center;
+  min-height: 100vh;
+  position: relative; /* For draggable toggle button */
+  transition: background 0.3s, color 0.3s;
+}
+
+/* Tabs Container */
+.tabs {
+  display: flex;
+  justify-content: center;
+  margin: 20px auto;
+  gap: 10px;
+}
+.tab-button {
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  background: #ddd;
+  cursor: pointer;
+  transition: background 0.3s;
+  font-weight: 700;
+  font-size: 1rem;
+  box-shadow: 0 0 10px rgba(0,0,0,0.1);
+
+}
+.tab-button:hover {
+  background: #ccc;
+}
+.tab-button.active {
+  background: #007bff;
+  color: #fff;
+}
+
+/* Card Content */
+.card-content {
+  display: none; /* Hidden by default; script toggles .active */
+  width: 350px;
+  margin: 0 auto 30px auto;
+  background: #fff;
+  border-radius: 12px;
+  box-shadow: 0 0 10px rgba(0,0,0,0.1);
+  padding: 20px;
+  text-align: center;
+}
+.card-content.active {
+  display: block;
+}
+
+label {
+  display: block;
+  text-align: left;
+  margin: 10px 0 5px 0;
+  font-weight: 600;
+  font-size: 0.9rem;
+}
+input, select {
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 15px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  font-size: 0.9rem;
+}
+
+.calculate-btn, .copy-btn {
+  display: block;
+  width: 100%;
+  padding: 10px;
+  margin-top: 10px;
+  border: none;
+  border-radius: 5px;
+  font-weight: 600;
+  cursor: pointer;
+  font-size: 0.9rem;
+}
+.calculate-btn {
+  background: #007bff;
+  color: #fff;
+  margin-bottom: 10px;
+}
+.calculate-btn:hover {
+  background: #0056b3;
+}
+.copy-btn {
+  background: #28a745;
+  color: #fff;
+}
+.copy-btn:hover {
+  background: #218838;
+}
+
+.result {
+  margin-top: 10px;
+  font-weight: 600;
+  font-size: 1rem;
+}
+
+/* Light/Dark Mode Toggle (draggable) at Bottom Center */
+#toggleTheme {
+  position: absolute;
+  bottom: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  padding: 8px 16px;
+  background: #007bff;
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  cursor: grab;
+  z-index: 999;
+}
+#toggleTheme:active {
+  cursor: grabbing;
+}
+
+/* Dark Mode Styles */
+.dark-mode {
+  background: #222 !important;
+  color: #fff !important;
+}
+.dark-mode .tab-button {
+  background: #444;
+  color: #fff;
+}
+.dark-mode .tab-button:hover {
+  background: #333;
+}
+.dark-mode .tab-button.active {
+  background: #555 !important;
+}
+.dark-mode .card-content {
+  background: #333;
+}
+.dark-mode #toggleTheme {
+  background: #555;
+}
+.dark-mode .calculate-btn {
+  background: #666;
+}
+.dark-mode .calculate-btn:hover {
+  background: #444;
+}
+.dark-mode .copy-btn {
+  background: #777;
+}
+.dark-mode .copy-btn:hover {
+  background: #555;
+}
+.dark-mode input, .dark-mode select {
+  background: #444;
+  color: #fff;
+  border: 1px solid #666;
+}

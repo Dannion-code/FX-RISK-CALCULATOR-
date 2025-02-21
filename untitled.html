@@ -1,0 +1,342 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Dannion FX Risk Calculator</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600&display=swap');
+    
+    body {
+      margin: 0;
+      padding: 0;
+      background: #f0f0f0; /* Light gray background */
+      font-family: 'Montserrat', sans-serif;
+    }
+
+    header {
+      text-align: center;
+      padding: 20px;
+      background: #fff;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    }
+    header h1 {
+      margin: 0;
+      font-size: 1.5rem;
+    }
+
+    nav {
+      display: flex;
+      justify-content: center;
+      background: #fff;
+      box-shadow: 0 0 5px rgba(0,0,0,0.1);
+    }
+    .tab-button {
+      border: none;
+      background: transparent;
+      padding: 15px 20px;
+      cursor: pointer;
+      font-weight: 600;
+      font-size: 0.9rem;
+      transition: background 0.3s;
+    }
+    .tab-button:hover {
+      background: #eee;
+    }
+    .tab-button.active {
+      background: #007bff;
+      color: #fff;
+    }
+
+    /* Main container for tab content */
+    main {
+      max-width: 400px;
+      margin: 20px auto;
+      padding: 0 10px;
+    }
+
+    .tab-content {
+      display: none;
+      background: #fff;
+      border-radius: 8px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+      padding: 20px;
+      margin-bottom: 20px;
+    }
+    .tab-content.active {
+      display: block;
+    }
+
+    .tab-content h2 {
+      margin-top: 0;
+      margin-bottom: 15px;
+      font-size: 1.2rem;
+    }
+
+    label {
+      display: block;
+      text-align: left;
+      margin-top: 10px;
+      font-weight: 600;
+      font-size: 0.9rem;
+    }
+
+    input, select {
+      width: 100%;
+      padding: 8px;
+      margin-top: 5px;
+      margin-bottom: 15px;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+      font-size: 0.9rem;
+    }
+
+    .calculate-btn, .copy-btn {
+      display: inline-block;
+      margin-right: 10px;
+      padding: 10px 20px;
+      border: none;
+      background: #007bff;
+      color: #fff;
+      font-weight: 600;
+      border-radius: 5px;
+      cursor: pointer;
+      font-size: 0.9rem;
+    }
+    .copy-btn {
+      background: #28a745;
+    }
+    .calculate-btn:hover {
+      background: #0056b3;
+    }
+    .copy-btn:hover {
+      background: #218838;
+    }
+
+    .result {
+      margin-top: 10px;
+      font-weight: 600;
+      font-size: 1rem;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Header -->
+  <header>
+    <h1>Dannion FX Risk Calculator</h1>
+  </header>
+
+  <!-- Tab Navigation -->
+  <nav>
+    <button class="tab-button active" data-tab="lot-size">Lot Size Calculator</button>
+    <button class="tab-button" data-tab="pips-points">Pips & Point Calculator</button>
+    <button class="tab-button" data-tab="profit-loss">Profit & Loss Calculator</button>
+  </nav>
+
+  <!-- Main Content -->
+  <main>
+    <!-- Lot Size Calculator -->
+    <section id="lot-size" class="tab-content active">
+      <h2>Lot Size Calculator</h2>
+      <label for="risk-amount">Risk Amount ($):</label>
+      <input type="number" id="risk-amount" placeholder="Enter risk amount">
+
+      <label for="pip-point">Pip/Point:</label>
+      <input type="number" id="pip-point" placeholder="Enter pip/point value">
+
+      <label for="instrument">Select Instrument:</label>
+      <select id="instrument">
+        <option value="non-jpy">Currency (Non-JPY)</option>
+        <option value="jpy">Currency (JPY)</option>
+        <option value="gold">Gold (XAU/USD)</option>
+        <option value="synthetic">Synthetic Indices</option>
+      </select>
+
+      <button class="calculate-btn" onclick="calculateLotSize()">Calculate Lot Size</button>
+      <button class="copy-btn" onclick="copyResult('lot-size-result')">Copy Result</button>
+
+      <p class="result" id="lot-size-result">Lot Size: --</p>
+    </section>
+
+    <!-- Pips & Point Calculator -->
+    <section id="pips-points" class="tab-content">
+      <h2>Pips & Point Calculator</h2>
+      <label for="entry-price">Entry Price:</label>
+      <input type="number" id="entry-price" placeholder="Enter entry price">
+
+      <label for="exit-price">Exit Price:</label>
+      <input type="number" id="exit-price" placeholder="Enter exit price">
+
+      <label for="instrument2">Select Instrument:</label>
+      <select id="instrument2">
+        <option value="non-jpy">Currency (Non-JPY)</option>
+        <option value="jpy">Currency (JPY)</option>
+        <option value="gold">Gold (XAU/USD)</option>
+        <option value="vol">Volatility Indices</option>
+        <option value="boom-crash">Boom/Crash Indices</option>
+        <option value="step">Step Index</option>
+      </select>
+
+      <button class="calculate-btn" onclick="calculatePipsPoints()">Calculate</button>
+      <button class="copy-btn" onclick="copyResult('pips-points-result')">Copy Result</button>
+
+      <p class="result" id="pips-points-result">Pips/Points: --</p>
+    </section>
+
+    <!-- Profit & Loss Calculator -->
+    <section id="profit-loss" class="tab-content">
+      <h2>Profit & Loss Calculator</h2>
+      <label for="lot-size-input">Lot Size:</label>
+      <input type="number" id="lot-size-input" placeholder="Enter lot size">
+
+      <label for="pips-profit">Pips/Points:</label>
+      <input type="number" id="pips-profit" placeholder="Enter pips/points">
+
+      <label for="instrument3">Select Instrument:</label>
+      <select id="instrument3">
+        <option value="non-jpy">Currency (Non-JPY)</option>
+        <option value="jpy">Currency (JPY)</option>
+        <option value="gold">Gold (XAU/USD)</option>
+        <option value="vol">Volatility Indices</option>
+        <option value="boom-crash">Boom/Crash Indices</option>
+        <option value="step">Step Index</option>
+      </select>
+
+      <button class="calculate-btn" onclick="calculateProfitLoss()">Calculate</button>
+      <button class="copy-btn" onclick="copyResult('profit-loss-result')">Copy Result</button>
+
+      <p class="result" id="profit-loss-result">Profit/Loss: --</p>
+    </section>
+  </main>
+
+  <script>
+    // Tab switching
+    const tabButtons = document.querySelectorAll('.tab-button');
+    const tabContents = document.querySelectorAll('.tab-content');
+    tabButtons.forEach(btn => {
+      btn.addEventListener('click', () => {
+        // remove active class from all
+        tabButtons.forEach(b => b.classList.remove('active'));
+        tabContents.forEach(c => c.classList.remove('active'));
+
+        // add active class to the clicked button and corresponding tab
+        btn.classList.add('active');
+        document.getElementById(btn.dataset.tab).classList.add('active');
+      });
+    });
+
+    // Copy Result to Clipboard
+    function copyResult(resultId) {
+      const text = document.getElementById(resultId).textContent;
+      navigator.clipboard.writeText(text);
+      alert('Result copied to clipboard!');
+    }
+
+    // Lot Size Calculator
+    function calculateLotSize() {
+      const riskAmount = parseFloat(document.getElementById('risk-amount').value) || 0;
+      const pips = parseFloat(document.getElementById('pip-point').value) || 0;
+      const instrument = document.getElementById('instrument').value;
+
+      let lotSize = 0;
+      if (pips <= 0 || riskAmount <= 0) {
+        document.getElementById('lot-size-result').textContent = 'Lot Size: Invalid input';
+        return;
+      }
+
+      // Formulas
+      // Non-JPY: lotSize = risk / (pips * 10)
+      // JPY:     lotSize = risk / (pips * 1000)
+      // Gold:    lotSize = risk / (pips * 10)
+      // Synthetic: lotSize = risk / (pips * minLotSize)
+      // For demonstration, let's assume minLotSize = 0.001 for synthetic if user picks it
+
+      if (instrument === 'non-jpy') {
+        lotSize = riskAmount / (pips * 10);
+      } else if (instrument === 'jpy') {
+        lotSize = riskAmount / (pips * 1000);
+      } else if (instrument === 'gold') {
+        lotSize = riskAmount / (pips * 10);
+      } else {
+        // Synthetic Indices (example minLotSize = 0.001)
+        const minLotSize = 0.001;
+        lotSize = riskAmount / (pips * minLotSize);
+      }
+
+      document.getElementById('lot-size-result').textContent = 'Lot Size: ' + lotSize.toFixed(3);
+    }
+
+    // Pips & Points Calculator
+    function calculatePipsPoints() {
+      const entry = parseFloat(document.getElementById('entry-price').value) || 0;
+      const exit = parseFloat(document.getElementById('exit-price').value) || 0;
+      const instrument = document.getElementById('instrument2').value;
+      let result = 0;
+      const diff = Math.abs(entry - exit);
+
+      if (diff <= 0) {
+        document.getElementById('pips-points-result').textContent = 'Pips/Points: Invalid input';
+        return;
+      }
+
+      // Non-JPY: pips = diff * 10000
+      // JPY:     pips = diff * 100
+      // Gold:    pips = diff * 10
+      // Vol:     points = diff * 100
+      // Boom/Crash: points = diff * 1
+      // Step:    points = diff * 10
+
+      if (instrument === 'non-jpy') {
+        result = diff * 10000;
+      } else if (instrument === 'jpy') {
+        result = diff * 100;
+      } else if (instrument === 'gold') {
+        result = diff * 10;
+      } else if (instrument === 'vol') {
+        result = diff * 100;
+      } else if (instrument === 'boom-crash') {
+        result = diff * 1;
+      } else if (instrument === 'step') {
+        result = diff * 10;
+      }
+
+      document.getElementById('pips-points-result').textContent = 'Pips/Points: ' + result.toFixed(2);
+    }
+
+    // Profit & Loss Calculator
+    function calculateProfitLoss() {
+      const lotSize = parseFloat(document.getElementById('lot-size-input').value) || 0;
+      const pips = parseFloat(document.getElementById('pips-profit').value) || 0;
+      const instrument = document.getElementById('instrument3').value;
+      let pl = 0;
+
+      if (lotSize <= 0 || pips <= 0) {
+        document.getElementById('profit-loss-result').textContent = 'Profit/Loss: Invalid input';
+        return;
+      }
+
+      // Non-JPY: Profit = pips * lotSize * 10
+      // JPY:     Profit = pips * lotSize * 100
+      // Gold:    Profit = pips * lotSize * 10
+      // Vol:     Profit = points * lotSize * 1
+      // Boom/Crash: same as Vol
+      // Step:    Profit = points * lotSize * 0.1
+
+      if (instrument === 'non-jpy') {
+        pl = pips * lotSize * 10;
+      } else if (instrument === 'jpy') {
+        pl = pips * lotSize * 100;
+      } else if (instrument === 'gold') {
+        pl = pips * lotSize * 10;
+      } else if (instrument === 'vol' || instrument === 'boom-crash') {
+        pl = pips * lotSize * 1;
+      } else if (instrument === 'step') {
+        pl = pips * lotSize * 0.1;
+      }
+
+      document.getElementById('profit-loss-result').textContent = 'Profit/Loss: $' + pl.toFixed(2);
+    }
+  </script>
+</body>
+</html>
